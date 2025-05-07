@@ -1,0 +1,27 @@
+{
+  "dailyProfits": [
+    {"date": "2025-05-01", "profit": 12.45},
+    {"date": "2025-05-02", "profit": 18.32},
+    {"date": "2025-05-03", "profit": -5.67},
+    {"date": "2025-05-04", "profit": 8.90},
+    {"date": "2025-05-05", "profit": 22.54},
+    {"date": "2025-05-06", "profit": 15.78},
+    {"date": "2025-05-07", "profit": 9.21}
+  ],
+  "totalProfit": 408.92,
+  "totalProfitPercentage": 10.2,
+  "bestPerformer": {
+    "botId": "bot-2",
+    "name": "Grid Bot",
+    "profit": 327.89,
+    "profitPercentage": 8.2
+  },
+  "worstPerformer": {
+    "botId": "bot-3",
+    "name": "Momentum Bot",
+    "profit": -45.32,
+    "profitPercentage": -1.2
+  },
+  "activeBots": 2,
+  "totalBots": 3
+}

@@ -1,0 +1,44 @@
+{
+  "strategies": [
+    {
+      "id": "strategy-1",
+      "name": "RSI Bounce",
+      "type": "MEAN_REVERSION",
+      "timeframe": "1h",
+      "entryRules": [
+        {
+          "indicator": "RSI",
+          "condition": "BELOW",
+          "value": 30
+        }
+      ],
+      "exitRules": [
+        {
+          "indicator": "RSI",
+          "condition": "ABOVE",
+          "value": 70
+        }
+      ]
+    },
+    {
+      "id": "strategy-2",
+      "name": "MACD Crossover",
+      "type": "MOMENTUM",
+      "timeframe": "4h",
+      "entryRules": [
+        {
+          "indicator": "MACD",
+          "condition": "CROSS_ABOVE",
+          "target": "SIGNAL"
+        }
+      ],
+      "exitRules": [
+        {
+          "indicator": "MACD",
+          "condition": "CROSS_BELOW",
+          "target": "SIGNAL"
+        }
+      ]
+    }
+  ]
+}

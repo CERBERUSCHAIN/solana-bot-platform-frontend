@@ -1,0 +1,37 @@
+{
+  "bots": [
+    {
+      "id": "bot-1",
+      "name": "DCA Bot",
+      "type": "dca",
+      "tradingPair": "SOL/USDT",
+      "exchange": "binance",
+      "status": "active",
+      "createdAt": "2025-04-01T12:00:00Z",
+      "profit": 125.45,
+      "profitPercentage": 12.5
+    },
+    {
+      "id": "bot-2",
+      "name": "Grid Bot",
+      "type": "grid",
+      "tradingPair": "ETH/USDT",
+      "exchange": "kraken",
+      "status": "paused",
+      "createdAt": "2025-04-15T09:30:00Z",
+      "profit": 327.89,
+      "profitPercentage": 8.2
+    },
+    {
+      "id": "bot-3",
+      "name": "Momentum Bot",
+      "type": "momentum",
+      "tradingPair": "BTC/USDT",
+      "exchange": "binance",
+      "status": "active",
+      "createdAt": "2025-05-01T14:45:00Z",
+      "profit": -45.32,
+      "profitPercentage": -1.2
+    }
+  ]
+}

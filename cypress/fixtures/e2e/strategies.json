@@ -1,0 +1,24 @@
+{
+  "strategies": [
+    {
+      "id": "strategy-1",
+      "name": "RSI Bounce",
+      "type": "MEAN_REVERSION",
+      "timeframe": "1h",
+      "profit": 189.75,
+      "profitPercentage": 18.9,
+      "createdAt": "2025-03-10T10:00:00Z",
+      "lastUsed": "2025-05-05T15:30:00Z"
+    },
+    {
+      "id": "strategy-2",
+      "name": "MACD Crossover",
+      "type": "MOMENTUM",
+      "timeframe": "4h",
+      "profit": 56.43,
+      "profitPercentage": 5.6,
+      "createdAt": "2025-04-12T08:15:00Z",
+      "lastUsed": "2025-05-06T09:45:00Z"
+    }
+  ]
+}

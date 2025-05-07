@@ -1,0 +1,33 @@
+{
+  "bots": [
+    {
+      "id": "bot-1",
+      "name": "DCA Bot",
+      "type": "dca",
+      "tradingPair": "SOL/USDT",
+      "exchange": "binance",
+      "status": "active",
+      "createdAt": "2025-04-01T12:00:00Z",
+      "settings": {
+        "investmentAmount": 100,
+        "interval": "daily",
+        "startDate": "2025-04-01T00:00:00Z"
+      }
+    },
+    {
+      "id": "bot-2",
+      "name": "Grid Bot",
+      "type": "grid",
+      "tradingPair": "ETH/USDT",
+      "exchange": "kraken",
+      "status": "paused",
+      "createdAt": "2025-04-15T09:30:00Z",
+      "settings": {
+        "upperLimit": 2000,
+        "lowerLimit": 1500,
+        "gridLines": 10,
+        "investmentAmount": 1000
+      }
+    }
+  ]
+}
