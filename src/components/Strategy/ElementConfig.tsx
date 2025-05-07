@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Assuming these interfaces exist in your codebase
+// Interfaces for the component
 interface Parameter {
   id: string;
   name: string;
@@ -24,7 +24,6 @@ interface ElementConfigProps {
 
 /**
  * ElementConfig component with accessibility improvements
- * Following WCAG 2.1 standards
  */
 const ElementConfig: React.FC<ElementConfigProps> = ({ element, onChange }) => {
   // Handle parameter change
@@ -72,12 +71,11 @@ const ElementConfig: React.FC<ElementConfigProps> = ({ element, onChange }) => {
         <div className="parameters-list">
           {element.parameters.map((param, index) => (
             <div key={param.id} className="parameter-item">
-              <label htmlFor={\param-\\}>{param.name}</label>
+              <label htmlFor={param-}>{param.name}</label>
               
-              {/* Different input types based on parameter type */}
               {param.type === 'select' && param.options ? (
                 <select
-                  id={\param-\\}
+                  id={param-}
                   value={param.value}
                   onChange={(e) => handleParamChange(index, e.target.value)}
                 >
@@ -86,15 +84,20 @@ const ElementConfig: React.FC<ElementConfigProps> = ({ element, onChange }) => {
                   ))}
                 </select>
               ) : param.type === 'boolean' ? (
-                <input
-                  id={\param-\\}
-                  type="checkbox"
-                  checked={!!param.value}
-                  onChange={(e) => handleParamChange(index, e.target.checked)}
-                />
+                <div className="checkbox-container">
+                  <input
+                    id={param-}
+                    type="checkbox"
+                    checked={!!param.value}
+                    onChange={(e) => handleParamChange(index, e.target.checked)}
+                  />
+                  <label htmlFor={param-} className="checkbox-label">
+                    {param.name}
+                  </label>
+                </div>
               ) : (
                 <input
-                  id={\param-\\}
+                  id={param-}
                   type={param.type === 'number' ? 'number' : 'text'}
                   value={param.value}
                   onChange={(e) => handleParamChange(index, e.target.value)}
