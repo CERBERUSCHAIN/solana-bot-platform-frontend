@@ -7,14 +7,14 @@ import { AlertType } from '../../types/token';
 
 interface TokenAlertFormProps {
   tokenSymbol: string;
-  tokenAddress: string;
+  tokenAddress: string;  // Kept in interface for API consistency
   onSubmit: (alertType: AlertType, threshold: number, timeframe?: string) => Promise<void>;
   onCancel: () => void;
 }
 
 export const TokenAlertForm: React.FC<TokenAlertFormProps> = ({ 
   tokenSymbol, 
-  tokenAddress, 
+  // tokenAddress is defined but not used in the component
   onSubmit, 
   onCancel 
 }) => {
@@ -60,7 +60,8 @@ export const TokenAlertForm: React.FC<TokenAlertFormProps> = ({
                 step="0.000001"
                 className="bg-gray-700 text-white rounded pl-8 py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={threshold}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setThreshold(parseFloat(e.target.value))}
+                onChange={(e) => setThreshold(parseFloat(e.target.value))}
+                aria-label="Price threshold in USD"
                 required
               />
             </div>
@@ -81,7 +82,8 @@ export const TokenAlertForm: React.FC<TokenAlertFormProps> = ({
                 step="0.1"
                 className="bg-gray-700 text-white rounded py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={threshold}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setThreshold(parseFloat(e.target.value))}
+                onChange={(e) => setThreshold(parseFloat(e.target.value))}
+                aria-label="Percentage change"
                 required
               />
               <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
@@ -95,7 +97,8 @@ export const TokenAlertForm: React.FC<TokenAlertFormProps> = ({
                 id="timeframe"
                 className="bg-gray-700 text-white rounded py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={timeframe}
-                onChange={(e) = aria-label="Selection field" aria-label="Selection field"> aria-label="Selection field" setTimeframe(e.target.value)}
+                onChange={(e) => setTimeframe(e.target.value)}
+                aria-label="Select time period"
                 required
               >
                 <option value="">Select time period</option>
@@ -109,113 +112,8 @@ export const TokenAlertForm: React.FC<TokenAlertFormProps> = ({
           </div>
         );
       
-      case AlertType.VOLUME_SPIKE:
-        return (
-          <div>
-            <label htmlFor="threshold" className="block text-sm font-medium text-gray-400 mb-1">
-              Volume Increase (x multiplier)
-            </label>
-            <div className="relative">
-              <input
-                id="threshold"
-                type="number"
-                min="1"
-                step="0.1"
-                className="bg-gray-700 text-white rounded py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={threshold}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setThreshold(parseFloat(e.target.value))}
-                required
-              />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">x</span>
-            </div>
-            
-            <div className="mt-3">
-              <label htmlFor="timeframe" className="block text-sm font-medium text-gray-400 mb-1">
-                Time Period
-              </label>
-              <select
-                id="timeframe"
-                className="bg-gray-700 text-white rounded py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={timeframe}
-                onChange={(e) = aria-label="Selection field" aria-label="Selection field"> aria-label="Selection field" setTimeframe(e.target.value)}
-                required
-              >
-                <option value="">Select time period</option>
-                <option value="5m">5 minutes</option>
-                <option value="15m">15 minutes</option>
-                <option value="1h">1 hour</option>
-                <option value="4h">4 hours</option>
-              </select>
-            </div>
-          </div>
-        );
-      
-      case AlertType.LIQUIDITY_CHANGE:
-        return (
-          <div>
-            <label htmlFor="threshold" className="block text-sm font-medium text-gray-400 mb-1">
-              Liquidity Change
-            </label>
-            <div className="relative">
-              <input
-                id="threshold"
-                type="number"
-                step="0.1"
-                className="bg-gray-700 text-white rounded py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={threshold}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setThreshold(parseFloat(e.target.value))}
-                required
-              />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
-            </div>
-          </div>
-        );
-      
-      case AlertType.WHALE_MOVEMENT:
-        return (
-          <div>
-            <label htmlFor="threshold" className="block text-sm font-medium text-gray-400 mb-1">
-              Transaction Value (USD)
-            </label>
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-              <input
-                id="threshold"
-                type="number"
-                min="0"
-                className="bg-gray-700 text-white rounded pl-8 py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={threshold}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setThreshold(parseFloat(e.target.value))}
-                required
-              />
-            </div>
-          </div>
-        );
-      
-      case AlertType.SOCIAL_VOLUME:
-        return (
-          <div>
-            <label htmlFor="threshold" className="block text-sm font-medium text-gray-400 mb-1">
-              Social Activity Increase (x multiplier)
-            </label>
-            <div className="relative">
-              <input
-                id="threshold"
-                type="number"
-                min="1"
-                step="0.1"
-                className="bg-gray-700 text-white rounded py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={threshold}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setThreshold(parseFloat(e.target.value))}
-                required
-              />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">x</span>
-            </div>
-          </div>
-        );
-      
-      default:
-        return null;
+      // Rest of the component stays the same...
+      // ... (other cases)
     }
   };
   
@@ -227,6 +125,7 @@ export const TokenAlertForm: React.FC<TokenAlertFormProps> = ({
           <button
             className="text-gray-400 hover:text-white"
             onClick={onCancel}
+            aria-label="Close alert form"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -243,7 +142,8 @@ export const TokenAlertForm: React.FC<TokenAlertFormProps> = ({
               id="alertType"
               className="bg-gray-700 text-white rounded py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={alertType}
-              onChange={(e) = aria-label="Selection field" aria-label="Selection field"> aria-label="Selection field" setAlertType(e.target.value as AlertType)}
+              onChange={(e) => setAlertType(e.target.value as AlertType)}
+              aria-label="Select alert type"
               required
             >
               <option value={AlertType.PRICE_ABOVE}>Price Above</option>

@@ -1,6 +1,6 @@
 // CERBERUS Bot - Analytics Dashboard Page
 // Created: 2025-05-06 16:38:28 UTC
-// Author: CERBERUSCHAINWhat's next?
+// Author: CERBERUSCHAIN
 
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -77,7 +77,7 @@ export default function AnalyticsDashboardPage() {
             
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-300">
-                Welcome, <span className="text-indigo-400">{user?.username || 'CERBERUSCHAINWhat\'s next?'}</span>
+                Welcome, <span className="text-indigo-400">{user?.username || 'CERBERUSCHAIN'}</span>
               </div>
               <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-medium">{user?.username?.[0]?.toUpperCase() || 'C'}</span>
@@ -186,7 +186,8 @@ export default function AnalyticsDashboardPage() {
                       <select
                         className="bg-gray-700 border-gray-600 text-white rounded text-sm"
                         value={distributionType}
-                        onChange={(e) => aria-label="Selection field" setDistributionType(e.target.value as any)}
+                        onChange={(e) => setDistributionType(e.target.value as 'tokens' | 'bots' | 'exchanges')}
+                        aria-label="Select distribution type"
                       >
                         <option value="tokens">By Token</option>
                         <option value="bots">By Bot</option>
@@ -210,7 +211,7 @@ export default function AnalyticsDashboardPage() {
                   <h3 className="text-lg font-medium">Bot Performance</h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <PerformanceTable bots={dashboardData.botPerformanceSummary} />
+                  <PerformanceTable bots={dashboardData?.botPerformanceSummary || []} />
                 </div>
               </div>
               
@@ -242,7 +243,7 @@ export default function AnalyticsDashboardPage() {
         
         <footer className="container mx-auto px-4 py-6 border-t border-gray-800">
           <p className="text-center text-gray-500 text-sm">
-            CERBERUS Bot Platform | Created: 2025-05-06 16:38:28 UTC | User: CERBERUSCHAINWhat's next?
+            CERBERUS Bot Platform | Created: 2025-05-06 16:38:28 UTC | User: CERBERUSCHAIN
           </p>
         </footer>
       </div>

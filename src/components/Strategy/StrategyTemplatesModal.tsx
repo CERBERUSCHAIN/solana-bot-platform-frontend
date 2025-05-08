@@ -1,6 +1,6 @@
 // CERBERUS Bot - Strategy Templates Modal Component
 // Created: 2025-05-06 21:59:40 UTC
-// Author: CERBERUSCHAINYes
+// Author: CERBERUSCHAIN
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -37,7 +37,7 @@ export const StrategyTemplatesModal: React.FC<StrategyTemplatesModalProps> = ({ 
     };
     
     fetchTemplates();
-  }, []);
+  }, [loadTemplates]);
   
   useEffect(() => {
     let filtered = [...templates];
@@ -88,8 +88,13 @@ export const StrategyTemplatesModal: React.FC<StrategyTemplatesModalProps> = ({ 
       const strategy = await createFromTemplate(selectedTemplate.id, strategyName);
       router.push(`/strategies/${strategy.id}`);
       onClose();
-    } catch (error: any) {
-      setError(error.message || 'Failed to create strategy from template.');
+    } catch (error: unknown) { // FIXED: Changed from 'Error' to 'unknown'
+      // Use proper type checking before accessing message property
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('Failed to create strategy from template.');
+      }
     } finally {
       setIsCreating(false);
     }
@@ -119,6 +124,7 @@ export const StrategyTemplatesModal: React.FC<StrategyTemplatesModalProps> = ({ 
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-300"
+            aria-label="Close templates modal" // FIX: Added aria-label for accessibility
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -135,7 +141,8 @@ export const StrategyTemplatesModal: React.FC<StrategyTemplatesModalProps> = ({ 
                 type="text"
                 placeholder="Search templates..."
                 value={searchTerm}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                aria-label="Search templates"
                 className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white"
               />
               
@@ -324,7 +331,8 @@ export const StrategyTemplatesModal: React.FC<StrategyTemplatesModalProps> = ({ 
                     <input
                       type="text"
                       value={strategyName}
-                      onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setStrategyName(e.target.value)}
+                      onChange={(e) => setStrategyName(e.target.value)}
+                      aria-label="Strategy name input"
                       className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white"
                       placeholder="Enter a name for your strategy"
                     />

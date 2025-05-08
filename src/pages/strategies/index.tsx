@@ -1,6 +1,6 @@
 // CERBERUS Bot - Strategy Builder Page
 // Created: 2025-05-06 21:28:38 UTC
-// Author: CERBERUSCHAINContinue please.
+// Author: CERBERUSCHAIN
 
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -10,8 +10,25 @@ import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import { useStrategy } from '../../contexts/StrategyContext';
 import { StrategiesList } from '../../components/Strategy/StrategiesList';
 import { StrategyTemplatesModal } from '../../components/Strategy/StrategyTemplatesModal';
-import { ImportStrategyModal } from '../../components/Strategy/ImportStrategyModal';
 import { CreateStrategyModal } from '../../components/Strategy/CreateStrategyModal';
+
+// Mock component for ImportStrategyModal
+const ImportStrategyModal: React.FC<{onClose: () => void}> = ({ onClose }) => (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl w-full">
+      <h2 className="text-xl font-bold mb-4">Import Strategy</h2>
+      <p className="mb-4">This is a placeholder for the ImportStrategyModal component.</p>
+      <div className="flex justify-end">
+        <button 
+          onClick={onClose}
+          className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+);
 
 export default function StrategiesPage() {
   const router = useRouter();
@@ -34,7 +51,7 @@ export default function StrategiesPage() {
   
   useEffect(() => {
     loadStrategies();
-  }, []);
+  }, [loadStrategies]);
   
   useEffect(() => {
     if (strategies) {
@@ -171,8 +188,9 @@ export default function StrategiesPage() {
             <div>
               <select
                 value={sortOption}
-                onChange={(e) => aria-label="Selection field" setSortOption(e.target.value as any)}
+                onChange={(e) => setSortOption(e.target.value as 'latest' | 'name' | 'performance')}
                 className="bg-gray-800 text-white rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                aria-label="Sort strategies by"
               >
                 <option value="latest">Recently Updated</option>
                 <option value="name">Name (A-Z)</option>
@@ -242,20 +260,20 @@ export default function StrategiesPage() {
             </div>
           </div>
         </main>
+        
+        {/* Modals */}
+        {isTemplateModalOpen && (
+          <StrategyTemplatesModal onClose={() => setIsTemplateModalOpen(false)} />
+        )}
+        
+        {isImportModalOpen && (
+          <ImportStrategyModal onClose={() => setIsImportModalOpen(false)} />
+        )}
+        
+        {isCreateModalOpen && (
+          <CreateStrategyModal onClose={() => setIsCreateModalOpen(false)} />
+        )}
       </div>
-      
-      {/* Modals */}
-      {isTemplateModalOpen && (
-        <StrategyTemplatesModal onClose={() => setIsTemplateModalOpen(false)} />
-      )}
-      
-      {isImportModalOpen && (
-        <ImportStrategyModal onClose={() => setIsImportModalOpen(false)} />
-      )}
-      
-      {isCreateModalOpen && (
-        <CreateStrategyModal onClose={() => setIsCreateModalOpen(false)} />
-      )}
     </ProtectedRoute>
   );
 }

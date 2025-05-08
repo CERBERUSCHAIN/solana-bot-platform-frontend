@@ -1,6 +1,6 @@
 // CERBERUS Bot - Token Filter Component
 // Created: 2025-05-06 16:12:48 UTC
-// Author: CERBERUSCHAINnext
+// Author: CERBERUSCHAIN
 
 import React, { useState } from 'react';
 import { TokenFilter as TokenFilterType, FilterOperator } from '../../types/token';
@@ -20,7 +20,7 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
   const handleAddFilter = () => {
     if (!filterValue) return;
     
-    let value: any = filterValue;
+    let value: string | number = filterValue;
     
     // Convert to number if appropriate
     if (['marketCap', 'price', 'priceChange24h', 'volume24h'].includes(selectedField)) {
@@ -35,7 +35,7 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
     };
     
     if (selectedOperator === FilterOperator.BETWEEN && secondaryValue) {
-      let secValue = secondaryValue;
+      let secValue: string | number = secondaryValue;
       if (['marketCap', 'price', 'priceChange24h', 'volume24h'].includes(selectedField)) {
         secValue = parseFloat(secondaryValue);
         if (isNaN(secValue)) return;
@@ -109,6 +109,9 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
         <button 
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex items-center text-sm text-indigo-400 hover:text-indigo-300"
+          aria-expanded={isExpanded ? "true" : "false"} // Using string values explicitly to avoid Edge linter issues
+          aria-controls="filter-panel"
+          aria-label="Toggle filter options"
         >
           <svg className={`w-4 h-4 mr-1 transform ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -123,6 +126,7 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
               onFilterChange([]);
             }}
             className="text-sm text-red-400 hover:text-red-300"
+            aria-label="Clear all filters"
           >
             Clear All Filters
           </button>
@@ -141,6 +145,7 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
               <button 
                 onClick={() => handleRemoveFilter(index)}
                 className="p-1 hover:bg-gray-600 rounded-full"
+                aria-label={`Remove filter: ${renderFilterLabel(filter)}`}
               >
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -152,7 +157,7 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
       )}
       
       {isExpanded && (
-        <div className="bg-gray-800 p-4 rounded-lg mt-2">
+        <div id="filter-panel" className="bg-gray-800 p-4 rounded-lg mt-2">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             {/* Field selector */}
             <div>
@@ -163,7 +168,8 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
                 id="field-select"
                 className="bg-gray-700 text-white rounded w-full py-2 px-3 text-sm"
                 value={selectedField}
-                onChange={(e) = aria-label="Selection field" aria-label="Selection field"> aria-label="Selection field" setSelectedField(e.target.value)}
+                onChange={(e) => setSelectedField(e.target.value)}
+                aria-label="Select field to filter by"
               >
                 <option value="marketCap">Market Cap</option>
                 <option value="price">Price</option>
@@ -184,7 +190,8 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
                 id="operator-select"
                 className="bg-gray-700 text-white rounded w-full py-2 px-3 text-sm"
                 value={selectedOperator}
-                onChange={(e) = aria-label="Selection field" aria-label="Selection field"> aria-label="Selection field" setSelectedOperator(e.target.value as FilterOperator)}
+                onChange={(e) => setSelectedOperator(e.target.value as FilterOperator)}
+                aria-label="Select filter operator"
               >
                 {/* Numeric operators */}
                 {['marketCap', 'price', 'priceChange24h', 'volume24h'].includes(selectedField) && (
@@ -221,7 +228,8 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
                 type={['marketCap', 'price', 'priceChange24h', 'volume24h'].includes(selectedField) ? 'number' : 'text'}
                 className="bg-gray-700 text-white rounded w-full py-2 px-3 text-sm"
                 value={filterValue}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setFilterValue(e.target.value)}
+                onChange={(e) => setFilterValue(e.target.value)}
+                aria-label="Filter value"
                 placeholder={
                   ['marketCap', 'price', 'volume24h'].includes(selectedField)
                     ? 'Enter amount in USD'
@@ -244,7 +252,8 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
                   type={['marketCap', 'price', 'priceChange24h', 'volume24h'].includes(selectedField) ? 'number' : 'text'}
                   className="bg-gray-700 text-white rounded w-full py-2 px-3 text-sm"
                   value={secondaryValue}
-                  onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setSecondaryValue(e.target.value)}
+                  onChange={(e) => setSecondaryValue(e.target.value)}
+                  aria-label="Secondary filter value"
                   placeholder="Upper bound"
                   step={['price'].includes(selectedField) ? '0.000001' : '1'}
                 />
@@ -256,6 +265,7 @@ export const TokenFilter: React.FC<TokenFilterProps> = ({ onFilterChange }) => {
               <button
                 onClick={handleAddFilter}
                 className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded w-full"
+                aria-label="Add filter to list"
               >
                 Add Filter
               </button>

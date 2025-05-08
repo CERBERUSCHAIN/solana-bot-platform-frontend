@@ -37,7 +37,7 @@ export default function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
           type="email"
           id="email"
           value={email}
-          onChange={(e) =  aria-label="Input field" aria-label="Input field"> aria-label="Input field" setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full bg-gray-700 text-white rounded px-3 py-2"
           data-cy="email-input"
         />
@@ -49,7 +49,7 @@ export default function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
           type="password"
           id="password"
           value={password}
-          onChange={(e) =  aria-label="Input field" aria-label="Input field"> aria-label="Input field" setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           className="w-full bg-gray-700 text-white rounded px-3 py-2"
           data-cy="password-input"
         />

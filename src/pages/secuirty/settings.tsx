@@ -1,6 +1,6 @@
 // CERBERUS Bot - Security Settings Page
 // Created: 2025-05-06 20:33:16 UTC
-// Author: CERBERUSCHAINStill isnt complete code.
+// Author: CERBERUSCHAIN
 
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -85,7 +85,7 @@ export default function SecuritySettingsPage() {
             
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-300">
-                Welcome, <span className="text-indigo-400">{user?.username || 'CERBERUSCHAINStill isnt complete code.'}</span>
+                Welcome, <span className="text-indigo-400">{user?.username || 'CERBERUSCHAIN'}</span>
               </div>
               <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-medium">{user?.username?.[0]?.toUpperCase() || 'C'}</span>
@@ -227,7 +227,8 @@ export default function SecuritySettingsPage() {
                                   type="checkbox" 
                                   className="sr-only peer"
                                   checked={settings.emailNotificationsEnabled}
-                                  onChange={(e) => aria-label="Input field" handleToggleSetting('emailNotificationsEnabled', e.target.checked)}
+                                  onChange={(e) => handleToggleSetting('emailNotificationsEnabled', e.target.checked)}
+                                  aria-label="Toggle security email notifications"
                                 />
                                 <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
                               </label>
@@ -243,8 +244,9 @@ export default function SecuritySettingsPage() {
                                   type="checkbox" 
                                   className="sr-only peer"
                                   checked={settings.notifyOnLogin}
-                                  onChange={(e) => aria-label="Input field" handleToggleSetting('notifyOnLogin', e.target.checked)}
+                                  onChange={(e) => handleToggleSetting('notifyOnLogin', e.target.checked)}
                                   disabled={!settings.emailNotificationsEnabled}
+                                  aria-label="Toggle login notifications"
                                 />
                                 <div className={`w-11 h-6 ${!settings.emailNotificationsEnabled ? 'bg-gray-800 opacity-50' : 'bg-gray-700'} peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600`}></div>
                               </label>
@@ -260,8 +262,9 @@ export default function SecuritySettingsPage() {
                                   type="checkbox" 
                                   className="sr-only peer"
                                   checked={settings.notifyOnWithdrawal}
-                                  onChange={(e) => aria-label="Input field" handleToggleSetting('notifyOnWithdrawal', e.target.checked)}
+                                  onChange={(e) => handleToggleSetting('notifyOnWithdrawal', e.target.checked)}
                                   disabled={!settings.emailNotificationsEnabled}
+                                  aria-label="Toggle withdrawal notifications"
                                 />
                                 <div className={`w-11 h-6 ${!settings.emailNotificationsEnabled ? 'bg-gray-800 opacity-50' : 'bg-gray-700'} peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600`}></div>
                               </label>
@@ -277,8 +280,9 @@ export default function SecuritySettingsPage() {
                                   type="checkbox" 
                                   className="sr-only peer"
                                   checked={settings.notifyOnSettingsChange}
-                                  onChange={(e) => aria-label="Input field" handleToggleSetting('notifyOnSettingsChange', e.target.checked)}
+                                  onChange={(e) => handleToggleSetting('notifyOnSettingsChange', e.target.checked)}
                                   disabled={!settings.emailNotificationsEnabled}
+                                  aria-label="Toggle settings change notifications"
                                 />
                                 <div className={`w-11 h-6 ${!settings.emailNotificationsEnabled ? 'bg-gray-800 opacity-50' : 'bg-gray-700'} peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600`}></div>
                               </label>
@@ -531,7 +535,7 @@ export default function SecuritySettingsPage() {
         
         <footer className="container mx-auto px-4 py-6 border-t border-gray-800">
           <p className="text-center text-gray-500 text-sm">
-            CERBERUS Bot Platform | Created: 2025-05-06 20:33:16 UTC | User: CERBERUSCHAINStill isnt complete code.
+            CERBERUS Bot Platform | Created: 2025-05-06 20:33:16 UTC | User: CERBERUSCHAIN
           </p>
         </footer>
       </div>
@@ -539,8 +543,8 @@ export default function SecuritySettingsPage() {
       {/* 2FA Setup Modal */}
       {showTwoFactorSetup && (
         <TwoFactorSetup 
-          currentMethod={settings.twoFactorAuthType} 
-          isEnabled={settings.twoFactorAuthEnabled}
+          currentMethod={settings?.twoFactorAuthType} 
+          isEnabled={settings?.twoFactorAuthEnabled || false}
           onClose={() => setShowTwoFactorSetup(false)}
           onComplete={() => {
             setShowTwoFactorSetup(false);

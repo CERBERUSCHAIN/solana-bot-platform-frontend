@@ -1,0 +1,65 @@
+/* styles/accessibility.css */
+
+/* Screen reader only - hides content visually but keeps it accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Makes sr-only content visible on focus - useful for skip links */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus styles for better keyboard navigation visibility */
+:focus {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  :focus {
+    outline: 3px solid CanvasText;
+  }
+  
+  button, 
+  [role="button"] {
+    border: 1px solid transparent;
+  }
+}
+
+/* Enhanced color contrast for text */
+.text-enhanced-contrast {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+/* Skip link for keyboard users to bypass navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000000;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}

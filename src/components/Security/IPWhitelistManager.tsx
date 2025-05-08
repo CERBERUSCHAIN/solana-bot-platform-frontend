@@ -11,7 +11,7 @@ export const IPWhitelistManager: React.FC = () => {
     settings, 
     ipWhitelist, 
     isLoading, 
-    error, 
+    // Removed unused 'error' variable
     fetchIPWhitelist, 
     addIPWhitelist, 
     removeIPWhitelist, 
@@ -26,7 +26,7 @@ export const IPWhitelistManager: React.FC = () => {
   
   useEffect(() => {
     fetchIPWhitelist();
-  }, []);
+  }, [fetchIPWhitelist]); // Added missing dependency
   
   const handleToggleWhitelist = async (enabled: boolean) => {
     try {
@@ -91,11 +91,14 @@ export const IPWhitelistManager: React.FC = () => {
           <label className="relative inline-flex items-center cursor-pointer">
             <input 
               type="checkbox" 
+              id="ipWhitelistToggle"
               className="sr-only peer"
               checked={settings?.ipWhitelistEnabled || false}
-              onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" handleToggleWhitelist(e.target.checked)}
+              onChange={(e) => handleToggleWhitelist(e.target.checked)}
+              aria-label="Toggle IP whitelist protection"
             />
             <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+            <span className="sr-only">Toggle IP whitelist protection</span>
           </label>
         </div>
         
@@ -206,7 +209,7 @@ export const IPWhitelistManager: React.FC = () => {
                     type="text"
                     className="w-full bg-gray-700 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     value={ipAddress}
-                    onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setIpAddress(e.target.value)}
+                    onChange={(e) => setIpAddress(e.target.value)}
                     placeholder="e.g. 192.168.1.1"
                   />
                 </div>
@@ -220,7 +223,7 @@ export const IPWhitelistManager: React.FC = () => {
                     type="text"
                     className="w-full bg-gray-700 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     value={ipLabel}
-                    onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setIpLabel(e.target.value)}
+                    onChange={(e) => setIpLabel(e.target.value)}
                     placeholder="e.g. Home Office, Work"
                   />
                 </div>
@@ -253,7 +256,7 @@ export const IPWhitelistManager: React.FC = () => {
             <div className="flex justify-between items-center">
               <div>
                 <h4 className="text-lg font-medium">Your Current IP Address</h4>
-                <p className="text-sm text-gray-400">This is the IP address you're currently using to access CERBERUS Bot Platform</p>
+                <p className="text-sm text-gray-400">This is the IP address you&apos;re currently using to access CERBERUS Bot Platform</p>
               </div>
               <button
                 onClick={() => {

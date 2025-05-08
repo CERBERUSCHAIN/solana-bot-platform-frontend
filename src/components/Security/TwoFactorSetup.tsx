@@ -1,6 +1,6 @@
 // CERBERUS Bot - Two Factor Authentication Setup Component
 // Created: 2025-05-06 20:33:16 UTC
-// Author: CERBERUSCHAINStill isnt complete code.
+// Author: CERBERUSCHAIN
 
 import React, { useState } from 'react';
 import { TwoFactorAuthType } from '../../types/security';
@@ -47,13 +47,19 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
       const result = await enableTwoFactorAuth(selectedMethod);
       
       if (result.success) {
-        setSetupData(result.setupData);
+        // Fix for line 50 - ensure setupData is not undefined
+        if (result.setupData) {
+          setSetupData(result.setupData);
+        } else {
+          setSetupData({ verificationRequired: false });
+        }
         setStep('setup');
       } else {
         setError('Failed to start 2FA setup. Please try again.');
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while setting up 2FA.');
+    } catch (err: unknown) { // Changed to unknown as required for catch clauses
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while setting up 2FA.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -80,8 +86,9 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
       } else {
         setError('Verification failed. Please check your code and try again.');
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during verification.');
+    } catch (err: unknown) { // Changed to unknown as required for catch clauses
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred during verification.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -104,8 +111,9 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
       } else {
         setError('Failed to disable 2FA. Please check your code and try again.');
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while disabling 2FA.');
+    } catch (err: unknown) { // Changed to unknown as required for catch clauses
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while disabling 2FA.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -121,6 +129,7 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white"
+            aria-label="Close dialog"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -181,8 +190,9 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
                       <input 
                         type="radio"
                         checked={selectedMethod === 'app'} 
-                        onChange={() = aria-label="Input field" aria-label="Input field"> aria-label="Input field" handleSelectMethod('app')}
+                        onChange={() => handleSelectMethod('app')}
                         className="h-4 w-4 text-indigo-600 bg-gray-700 border-gray-600"
+                        aria-label="Select authenticator app method"
                       />
                       <div className="ml-3">
                         <h4 className="font-medium">Authenticator App</h4>
@@ -205,8 +215,9 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
                       <input 
                         type="radio"
                         checked={selectedMethod === 'sms'} 
-                        onChange={() = aria-label="Input field" aria-label="Input field"> aria-label="Input field" handleSelectMethod('sms')}
+                        onChange={() => handleSelectMethod('sms')}
                         className="h-4 w-4 text-indigo-600 bg-gray-700 border-gray-600"
+                        aria-label="Select SMS verification method"
                       />
                       <div className="ml-3">
                         <h4 className="font-medium">SMS Verification</h4>
@@ -229,8 +240,9 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
                       <input 
                         type="radio"
                         checked={selectedMethod === 'email'} 
-                        onChange={() = aria-label="Input field" aria-label="Input field"> aria-label="Input field" handleSelectMethod('email')}
+                        onChange={() => handleSelectMethod('email')}
                         className="h-4 w-4 text-indigo-600 bg-gray-700 border-gray-600"
+                        aria-label="Select email verification method"
                       />
                       <div className="ml-3">
                         <h4 className="font-medium">Email Verification</h4>
@@ -267,9 +279,10 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
                 
                 {setupData.qrCodeUrl && (
                   <div className="flex justify-center mb-4">
+                    {/* TODO: Replace with Next.js Image component for better performance */}
                     <img 
                       src={setupData.qrCodeUrl} 
-                      alt="QR Code" 
+                      alt="QR Code for authenticator setup" 
                       className="w-48 h-48 bg-white p-2 rounded"
                     />
                   </div>
@@ -284,11 +297,11 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
               </div>
             ) : selectedMethod === 'sms' ? (
               <p className="mb-4">
-                We've sent a verification code to your phone number. Enter the code below to verify your phone.
+                We&apos;ve sent a verification code to your phone number. Enter the code below to verify your phone.
               </p>
             ) : (
               <p className="mb-4">
-                We've sent a verification code to your email address. Enter the code below to verify your email.
+                We&apos;ve sent a verification code to your email address. Enter the code below to verify your email.
               </p>
             )}
             
@@ -301,7 +314,7 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
                 type="text"
                 className="w-full bg-gray-700 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-lg tracking-widest"
                 value={verificationCode}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                 maxLength={6}
                 placeholder="000000"
               />
@@ -361,7 +374,7 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
                     onClick={onComplete}
                     className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded text-white"
                   >
-                    I've Saved My Recovery Keys
+                    I&apos;ve Saved My Recovery Keys
                   </button>
                 </div>
               </div>
@@ -420,7 +433,7 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
                 type="text"
                 className="w-full bg-gray-700 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-lg tracking-widest"
                 value={verificationCode}
-                onChange={(e) = aria-label="Input field" aria-label="Input field"> aria-label="Input field" setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                 maxLength={6}
                 placeholder="000000"
               />
@@ -447,4 +460,3 @@ export const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({
     </div>
   );
 };
-
